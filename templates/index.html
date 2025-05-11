@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><center>
+<head>
+    <title>Bitcoin Transaction Analyzer</title>
+</head>
+<body>
+    <h2>Enter Bitcoin Transaction ID</h2>
+    <form action="/analyze" method="post">
+        <input type="text" name="txid" placeholder="Enter Transaction ID" required>
+        <button type="submit">Analyze</button>
+    </form>
+    <h3>Transaction Details:</h3>
+    <pre id="result"></pre>
+
+    <script>
+        document.querySelector("form").onsubmit = async function(event) {
+            event.preventDefault();
+            let formData = new FormData(this);
+            let response = await fetch("/analyze", { method: "POST", body: formData });
+            let data = await response.json();
+            document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+        };
+    </script>
+</body><center>
+</html>
